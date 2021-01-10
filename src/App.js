@@ -12,19 +12,20 @@ function App(){
   const [mapIndicies, setMapIndicies] = useState(generateMapIndicies);
   const [totalCorrectGuesses, setTotalCorrectGuesses] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
-  const [currentGuess, setCurrentGuess] = useState(null);
+  const [currentGuess, setCurrentGuess] = useState([]);
   const [currentResort, setCurrentResort] = useState(null);
 
   const resetState = () => {
     setMapIndicies(generateMapIndicies());
     setTotalCorrectGuesses(0);
     setGameIndex(0);
-    setCurrentGuess(null);
+    setCurrentGuess([]);
     setCurrentResort(null);
   };
 
   const guess = () => {
-    if (currentGuess[0] ===  currentResort.name) {
+
+    if (currentGuess.length && currentGuess[0].toLowerCase() ===  currentResort.name.toLowerCase()) {
       setTotalCorrectGuesses(totalCorrectGuesses + 1);
       alert('Correct!');
     } else {
@@ -66,7 +67,7 @@ function App(){
             <InputGroup>
               <Typeahead
                 onChange={setCurrentGuess}
-                options={resorts.map(r => r.name)}
+                options={resorts.map(resort => resort.name)}
                 selected={currentGuess}
                 placeholder='Start typing a resort...'
                 flip
@@ -87,10 +88,7 @@ function App(){
         
       </flex>
       <footer>
-        All artwork beautifully painted by 
-        <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">
-          James Niehues
-        </a>.
+        All artwork beautifully painted by <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">James Niehues</a>.
       </footer>
     </div>
   );
