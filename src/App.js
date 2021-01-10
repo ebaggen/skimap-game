@@ -15,6 +15,7 @@ function App(){
   const [showGameOverPopup, setShowGameOverPopup] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(undefined);
   const [results, setResults] = useState([]);
+  const [selection, setSelection] = useState(null);
 
   const restartGame = () => {
     setMapIndicies(generateMapIndicies());
@@ -35,15 +36,20 @@ function App(){
         setTotalCorrectGuesses(totalCorrectGuesses + 1);
         setIsGuessCorrect(true);
         isCorrect = true;
-      } 
+      }
     } else {
       guess = '';
+    }
+
+    if (!isCorrect) {
+      setSelection([currentResort.name]);
     }
 
     setIsGuessCorrect(isCorrect);
     setResults([...results, {isCorrect: isCorrect, actual: currentResort.name, guessed: guess}])
     
     await sleep(1000);
+    setSelection([]);
     setIsGuessCorrect(undefined);
     setGameIndex(gameIndex + 1);
   };
@@ -73,17 +79,26 @@ function App(){
         Name that Niehues
       </header>
       <body>
-        <label>
-          {totalCorrectGuesses + 1} / {resorts.length}
-        </label>
-        {currentResort && 
-          <Image className="App-body-image" src={currentResort.img} fluid/>
+        {currentResort &&
+          <> 
+          <Image
+            className="App-body-image"
+            src={currentResort.img}
+            alt={`Cannot find image for ${currentResort.name}`}
+            fluid
+          />
+            <GuessControls
+              resort={currentResort}
+              selection={selection}
+              isGuessCorrect={isGuessCorrect}
+              onSubmit={(g) => guess(g)}
+              onSelectionChange={setSelection}
+            />
+            <label className="App-user-control">
+              {results.length + 1} / {resorts.length}
+            </label>
+          </>
         }
-        <GuessControls
-          resorts={resorts}
-          isGuessCorrect={isGuessCorrect}
-          onSubmit={(g) => guess(g)}
-        />
       </body>
       <footer className="App-footer">
         All artwork beautifully painted by <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">James Niehues</a>.

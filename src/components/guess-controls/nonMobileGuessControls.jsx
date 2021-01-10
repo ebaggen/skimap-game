@@ -1,10 +1,11 @@
 import React from 'react';
 import TextEntry from './textEntry';
+import HintPopover from './hintPopover';
 import { Form, FormGroup, InputGroup, Button} from 'react-bootstrap';
 
 const NonMobileGuessControls = (props) => {
     return (
-        <Form>
+        <Form className="App-user-control">
           <FormGroup>
             <InputGroup>
               <TextEntry
@@ -22,6 +23,7 @@ const NonMobileGuessControls = (props) => {
                   >
                   Submit
                 </Button>
+                <HintPopover resort={props.resort}/>
                 <Button variant="outline-danger" onClick={props.onSubmit}>
                   Give up
                 </Button>

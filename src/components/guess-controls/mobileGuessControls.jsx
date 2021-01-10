@@ -1,5 +1,6 @@
 import React from 'react';
 import TextEntry from './textEntry';
+import HintPopover from './hintPopover';
 import { Button, Container, Row} from 'react-bootstrap';
 
 const MobileGuessControls = (props) => {
@@ -22,6 +23,9 @@ const MobileGuessControls = (props) => {
                 >
                     Submit
                 </Button>
+            </Row>
+            <Row className="App-user-control">
+                <HintPopover resort={props.resort}/>
             </Row>
             <Row className="App-user-control">
                 <Button variant="outline-danger" onClick={props.onSubmit}>

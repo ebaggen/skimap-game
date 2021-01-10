@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { isMobileDevice } from 'responsive-react';
 import NonMobileGuessControls from './nonMobileGuessControls';
 import MobileGuessControls from './mobileGuessControls';
 
 const GuessControls = (props) => {
-    const [selection, setSelection] = useState(null);
+    //const [selection, setSelection] = useState(null);
 
     const submit = () => {
-        if (selection && selection.length) {
-            props.onSubmit(selection[0]);
+        if (props.selection && props.selection.length) {
+            props.onSubmit(props.selection[0]);
         } else {
-            props.onSubmit('')
+            props.onSubmit('');
         }
-        
-        setSelection([])
     }
 
     return (
         <>
             {isMobileDevice() &&
                 <MobileGuessControls
-                    selection={selection}
-                    onSelectionChange={setSelection}
+                    resort={props.resort}
+                    selection={props.selection}
+                    onSelectionChange={props.onSelectionChange}
                     onSubmit={submit}
                     isGuessCorrect={props.isGuessCorrect}
                 />
             }
             {!isMobileDevice() && 
                 <NonMobileGuessControls
-                    selection={selection}
-                    onSelectionChange={setSelection}
+                    resort={props.resort}
+                    selection={props.selection}
+                    onSelectionChange={props.onSelectionChange}
                     onSubmit={submit}
                     isGuessCorrect={props.isGuessCorrect}
                 />
