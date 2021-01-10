@@ -1,3 +1,5 @@
+import resorts from './resorts'
+
 // Fisher-Yates Shuffle method [https://en.wikipedia.org/wiki/Fisher–Yates_shuffle]
 const shuffle = (array) => {
     let shuffledArray = [...array];
@@ -10,20 +12,7 @@ const shuffle = (array) => {
     return shuffledArray;
 };
 
-export const resorts = [
-    {
-        name: "Crystal",
-        img: "https://cdn.shopify.com/s/files/1/0102/5871/0587/products/141crystal_thumbnail_1080x.jpg?v=1566769751"
-    },
-    {
-        name: "Sunday River",
-        img: "https://cdn.shopify.com/s/files/1/0102/5871/0587/products/Sunday_River_2002-optimized_1080x.jpg?v=1563127891"
-    },
-    {
-        name: "Okemo",
-        img: "https://cdn.shopify.com/s/files/1/0102/5871/0587/products/Okemo-optimized.jpg?v=1563750368"
-    }
-];
+export { resorts };
 
 // Generate a shuffled n-array of resorts
 export const generateMapIndicies = () => {

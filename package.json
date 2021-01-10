@@ -8,6 +8,7 @@
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-typeahead": "^5.1.4",
     "react-dom": "^16.6.1",
+    "react-image-webp": "^0.7.0",
     "react-scripts": "2.1.1",
     "web-vitals": "^1.0.1"
   },

@@ -87,7 +87,7 @@ function App(){
         
       </flex>
       <footer>
-        All artwork beautifully painted by
+        All artwork beautifully painted by 
         <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">
           James Niehues
         </a>.
