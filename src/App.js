@@ -69,7 +69,7 @@ function App(){
                 options={resorts.map(r => r.name)}
                 selected={currentGuess}
                 placeholder='Start typing a resort...'
-                flip={true}
+                flip
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
                     guess();
@@ -87,7 +87,10 @@ function App(){
         
       </flex>
       <footer>
-        All artwork beautifully painted by <a href="https://jamesniehues.com">James Nihues</a>.
+        All artwork beautifully painted by
+        <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">
+          James Niehues
+        </a>.
       </footer>
     </div>
   );
