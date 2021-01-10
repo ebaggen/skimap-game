@@ -12,7 +12,13 @@ const shuffle = (array) => {
     return shuffledArray;
 };
 
-export { resorts };
+const sleep = (ms) => {
+    return new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
+  }
+
+export { resorts, sleep };
 
 // Generate a shuffled n-array of resorts
 export const generateMapIndicies = () => {
