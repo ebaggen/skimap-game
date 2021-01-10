@@ -27,19 +27,21 @@ function App(){
   };
 
   const guess = async function(guess) {
+    
+    let isCorrect = false;
     if (guess && guess.length)
     {
       if (guess.toLowerCase() ===  currentResort.name.toLowerCase()) {
         setTotalCorrectGuesses(totalCorrectGuesses + 1);
         setIsGuessCorrect(true);
-      } else {
-        setIsGuessCorrect(false);
-      }
-      setResults([...results, {actual: currentResort.name, guessed: guess}])
+        isCorrect = true;
+      } 
     } else {
-      setResults([...results, {actual: currentResort.name, guessed: ''}])
-      setIsGuessCorrect(false);
+      guess = '';
     }
+
+    setIsGuessCorrect(isCorrect);
+    setResults([...results, {isCorrect: isCorrect, actual: currentResort.name, guessed: guess}])
     
     await sleep(1000);
     setIsGuessCorrect(undefined);

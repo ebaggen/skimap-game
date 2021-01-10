@@ -7,13 +7,14 @@ const resultsTable = (props) => {
     return (
         <Table>
             <thead>
+                <th/>
                 <th>Actual Resort</th>
                 <th>Your Guess</th>
             </thead>
             <tbody>
                 {props.results.map(result => {
                     return (
-                        <ResultsTableRow actual={result.actual} guessed={result.guessed} />
+                        <ResultsTableRow result={result} />
                     );
                 })}
             </tbody>
