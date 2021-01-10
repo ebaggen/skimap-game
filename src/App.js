@@ -1,20 +1,17 @@
 import React from 'react';
 
 import './App.css';
-import { generateMapIndicies, resorts, sleep } from './util';
+import { generateMapIndicies, resorts, sleep, nullResort } from './util';
 import { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import { Form, FormGroup, InputGroup, Image, Row } from 'react-bootstrap';
-import { ResultsView } from './components';
+import { ResultsView, GuessControls } from './components';
+import { Image } from 'react-bootstrap';
 
 function App(){
 
   const [mapIndicies, setMapIndicies] = useState(generateMapIndicies);
   const [totalCorrectGuesses, setTotalCorrectGuesses] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
-  const [currentGuess, setCurrentGuess] = useState([]);
-  const [currentResort, setCurrentResort] = useState(null);
+  const [currentResort, setCurrentResort] = useState(nullResort);
   const [showGameOverPopup, setShowGameOverPopup] = useState(false);
   const [isGuessCorrect, setIsGuessCorrect] = useState(undefined);
   const [results, setResults] = useState([]);
@@ -23,23 +20,22 @@ function App(){
     setMapIndicies(generateMapIndicies());
     setTotalCorrectGuesses(0);
     setGameIndex(0);
-    setCurrentGuess([]);
-    setCurrentResort(null);
+    setCurrentResort(nullResort);
     setShowGameOverPopup(false);
     setIsGuessCorrect(undefined);
     setResults([]);
   };
 
-  const guess = async function() {
-    if (currentGuess.length)
+  const guess = async function(guess) {
+    if (guess && guess.length)
     {
-      if (currentGuess[0].toLowerCase() ===  currentResort.name.toLowerCase()) {
+      if (guess.toLowerCase() ===  currentResort.name.toLowerCase()) {
         setTotalCorrectGuesses(totalCorrectGuesses + 1);
         setIsGuessCorrect(true);
       } else {
         setIsGuessCorrect(false);
       }
-      setResults([...results, {actual: currentResort.name, guessed: currentGuess}])
+      setResults([...results, {actual: currentResort.name, guessed: guess}])
     } else {
       setResults([...results, {actual: currentResort.name, guessed: ''}])
       setIsGuessCorrect(false);
@@ -47,7 +43,6 @@ function App(){
     
     await sleep(1000);
     setIsGuessCorrect(undefined);
-    setCurrentGuess([]);
     setGameIndex(gameIndex + 1);
   };
 
@@ -73,45 +68,22 @@ function App(){
           total={resorts.length}
           results={results}
         />
-        <Row>
-          Name that Niehues
-        </Row>
-        <label>
-          {totalCorrectGuesses} / {resorts.length}
-        </label>
-        <Row height="10px">
-          {currentResort && 
-            <Image className="App-image" src={currentResort.img}/>
-          }
-        </Row>
-        <Form>
-          <FormGroup>
-            <InputGroup>
-              <Typeahead
-                onChange={setCurrentGuess}
-                options={resorts.map(resort => resort.name)}
-                selected={currentGuess}
-                placeholder='Start typing a resort...'
-                flip
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && currentGuess.length) {
-                    guess();
-                  }
-                }}
-                isValid={isGuessCorrect === true}
-                isInvalid={isGuessCorrect === false}
-              />
-              <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={guess} disabled={currentGuess.length === 0}>
-                  Submit
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </FormGroup>
-        </Form>
+        Name that Niehues
       </header>
-      
-      <footer>
+      <body>
+        <label>
+          {totalCorrectGuesses + 1} / {resorts.length}
+        </label>
+        {currentResort && 
+          <Image className="App-body-image" src={currentResort.img} fluid/>
+        }
+        <GuessControls
+          resorts={resorts}
+          isGuessCorrect={isGuessCorrect}
+          onSubmit={(g) => guess(g)}
+        />
+      </body>
+      <footer className="App-footer">
         All artwork beautifully painted by <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">James Niehues</a>.
       </footer>
     </div>

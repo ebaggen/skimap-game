@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: 282c34;
+  height: 100vh;
 }
 
 .App-logo {
@@ -7,20 +14,31 @@
   pointer-events: none;
 }
 
-.App-image {
-  max-height: 100%;
-  max-width: 100%;
+.App-header {
+  height: 10vh;
+  font-size: calc(10px + 2vmin);
 }
 
-.App-header {
-  background-color: white;
-  /* /*in-height: 100vh; */
-  display: flex;
-  flex-direction: column;
+.App-body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.App-body-image {
+  object-fit: cover;
+  max-height: 50vh;
+  max-width: 100vh;
+}
+
+.App-user-control {
+  text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: 282c34;
+  margin: 10px;
+}
+
+.App-footer {
+  height: 20vh;
 }
 
 .App-link {

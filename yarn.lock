@@ -6047,6 +6047,11 @@ joi@^11.1.1:
     isemail "3.x.x"
     topo "2.x.x"
 
+jquery@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -9009,6 +9014,11 @@ resolve@^1.10.0, resolve@^1.13.1, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.6.0
   dependencies:
     is-core-module "^2.1.0"
     path-parse "^1.0.6"
+
+responsive-react@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/responsive-react/-/responsive-react-5.0.0.tgz#284c6610b156cd382e93a35431b7ecfa035c7949"
+  integrity sha512-DSMC8JWjgOWgBoq6heyWBvqLmMnNTMy+CbkG8p/Aw/N6qs/sK3bXf1wKK82wHM9lNVtYnCok+dMKA9856cj/fg==
 
 restore-cursor@^2.0.0:
   version "2.0.0"
