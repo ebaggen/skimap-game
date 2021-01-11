@@ -132,7 +132,7 @@ export default function App(){
               <img
                 className={classes.img}
                 src={currentResort.img}
-                alt={`Cannot find image for ${currentResort.name}`}
+                alt={`Cannot find ${currentResort.name}.`}
                 flex
               />
             </div>

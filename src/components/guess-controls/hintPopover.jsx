@@ -1,7 +1,7 @@
 import React from 'react'
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Popover from '@material-ui/core/Popover';
-import { Button, Container, Row } from 'react-bootstrap';
+import { Button  } from 'react-bootstrap';
 import { Box, Typography } from '@material-ui/core';
 
 export default function HintPopover(props) {
