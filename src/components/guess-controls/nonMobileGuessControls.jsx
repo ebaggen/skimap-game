@@ -24,7 +24,7 @@ const NonMobileGuessControls = (props) => {
                   Submit
                 </Button>
                 <HintPopover resort={props.resort}/>
-                <Button variant="outline-danger" onClick={props.onSubmit}>
+                <Button variant="outline-danger" onClick={props.onSubmit} disabled={props.isGuessCorrect !== undefined}>
                   Give up
                 </Button>
               </InputGroup.Append>

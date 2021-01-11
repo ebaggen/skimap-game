@@ -4,9 +4,53 @@ import './App.css';
 import { generateMapIndicies, resorts, sleep, nullResort } from './util';
 import { useState, useEffect } from 'react';
 import { ResultsView, GuessControls } from './components';
-import { Image } from 'react-bootstrap';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core';
 
-function App(){
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100vw',
+    height: '100vh',
+    flexDirection: 'column',
+  },
+  title: {
+    height: '5vh',
+    variant: 'h1'
+  },
+  body: {
+    height: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  footer: {
+    height: '5hv',
+    margin: '10px'
+  },
+  image: {
+    height: '80vh',
+    //borderStyle: 'solid',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  img: {
+    margin: 'auto',
+    objectFit: 'contain',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+  controls: {
+    display: 'flex',
+    justifyContent: 'center',
+    alightItems: 'center',
+    //borderStyle: 'solid',
+  }
+}));
+
+export default function App(){
 
   const [mapIndicies, setMapIndicies] = useState(generateMapIndicies);
   const [totalCorrectGuesses, setTotalCorrectGuesses] = useState(0);
@@ -26,6 +70,8 @@ function App(){
     setIsGuessCorrect(undefined);
     setResults([]);
   };
+
+  
 
   const guess = async function(guess) {
     
@@ -60,51 +106,55 @@ function App(){
 
   useEffect(() => {
     // Check if game is over
-    if (gameIndex >= resorts.length) {
+    if (results.length >= resorts.length) {
       setShowGameOverPopup(true);
     }
   });
 
+  const classes = useStyles();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <ResultsView
-          show={showGameOverPopup}
-          onHide={() => restartGame()}
-          totalCorrect={totalCorrectGuesses}
-          total={resorts.length}
-          results={results}
-        />
+    <Grid container justify="space-between" alignItems="center" className={classes.root}>
+      <ResultsView
+        show={showGameOverPopup}
+        onHide={() => restartGame()}
+        totalCorrect={totalCorrectGuesses}
+        total={resorts.length}
+        results={results}
+      />
+      <Typography className={classes.title}>
         Name that Niehues
-      </header>
-      <body>
+      </Typography>
+      <body className={classes.body}>
         {currentResort &&
-          <> 
-          <Image
-            className="App-body-image"
-            src={currentResort.img}
-            alt={`Cannot find image for ${currentResort.name}`}
-            fluid
-          />
-            <GuessControls
-              resort={currentResort}
-              selection={selection}
-              isGuessCorrect={isGuessCorrect}
-              onSubmit={(g) => guess(g)}
-              onSelectionChange={setSelection}
-            />
-            <label className="App-user-control">
-              {results.length + 1} / {resorts.length}
-            </label>
+          <>
+            <div elevation={10} variant="outlines" className={classes.image}>
+              <img
+                className={classes.img}
+                src={currentResort.img}
+                alt={`Cannot find image for ${currentResort.name}`}
+                flex
+              />
+            </div>
+            <div className={classes.controls}> 
+              <GuessControls
+                
+                resort={currentResort}
+                selection={selection}
+                isGuessCorrect={isGuessCorrect}
+                onSubmit={(g) => guess(g)}
+                onSelectionChange={setSelection}
+              />
+            </div>
+            <label>
+                {results.length + 1} / {resorts.length}
+              </label>
           </>
         }
       </body>
-      <footer className="App-footer">
+      <footer className={classes.footer}>
         All artwork beautifully painted by <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">James Niehues</a>.
       </footer>
-    </div>
+    </Grid>
   );
 }
-
-export default App;

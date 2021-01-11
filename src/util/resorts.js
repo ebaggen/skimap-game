@@ -162,8 +162,8 @@ const resorts = [
     {
       "name": "Brundage",
       "img": "./images/brundage.png",
-      "location": "Brundage",
-      "region": "Idaho",
+      "location": "Idaho",
+      "region": "Northern Rockies",
       "country": "US",
       "year painted": 2007
     },
@@ -202,7 +202,7 @@ const resorts = [
     {
       "name": "Cataloochee",
       "img": "./images/cataloochee.png",
-      "location": "Cataloochee",
+      "location": "New York",
       "region": "Midwest / Mid-Atlantic",
       "country": "US",
       "year painted": 2010

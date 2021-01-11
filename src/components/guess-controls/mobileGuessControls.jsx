@@ -6,7 +6,7 @@ import { Button, Container, Row} from 'react-bootstrap';
 const MobileGuessControls = (props) => {
     return (
         <Container fluid>
-            <Row className="App-user-control">
+            <Row>
                 <TextEntry
                     selection={props.selection}
                     onSelectionChange={props.onSelectionChange}
@@ -15,7 +15,7 @@ const MobileGuessControls = (props) => {
                     isGuessCorrect={props.isGuessCorrect}
                 />
             </Row>
-            <Row className="App-user-control">
+            <Row>
                 <Button
                     variant="outline-secondary"
                     onClick={props.onSubmit}
@@ -24,10 +24,10 @@ const MobileGuessControls = (props) => {
                     Submit
                 </Button>
             </Row>
-            <Row className="App-user-control">
+            <Row>
                 <HintPopover resort={props.resort}/>
             </Row>
-            <Row className="App-user-control">
+            <Row>
                 <Button variant="outline-danger" onClick={props.onSubmit}>
                     Give up
                 </Button>
