@@ -1,8 +1,13 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import ResultsTableRow from './resultsTableRow';
+import Result from '../../types/result';
 
-const resultsTable = (props) => {
+type Props = {
+    results: Result[]
+}
+
+const resultsTable = ({ results }: Props) => {
 
     return (
         <Table>
@@ -12,7 +17,7 @@ const resultsTable = (props) => {
                 <th>Your Guess</th>
             </thead>
             <tbody>
-                {props.results.map(result => {
+                {results.map(result => {
                     return (
                         <ResultsTableRow result={result} />
                     );

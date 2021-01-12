@@ -1,11 +1,21 @@
 import React from 'react';
 import { Button, Modal, Accordion, Card } from 'react-bootstrap';
+import Result from '../../types/result';
 import ResultsTable from './resultsTable';
 
-const GameOverPopup = (props) => {
+type Props = {
+    results: Result[],
+    show: boolean,
+    onHide: () => void
+}
+
+const GameOverPopup = ({ results, show, onHide }: Props) => {
+
+    const totalCorrect = results.filter(result => result.isCorrect).length;
+
     return (
         <Modal
-            {...props}
+            show={show}
             size="lg"
             centered
             backdrop="static"
@@ -15,7 +25,7 @@ const GameOverPopup = (props) => {
                 Game over!
             </Modal.Header>
             <Modal.Body>
-                You got {props.totalCorrect} of {props.total} correct.
+                You got {totalCorrect} of {results.length} correct.
 
                 <Accordion>
                     <Card>
@@ -26,14 +36,14 @@ const GameOverPopup = (props) => {
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
-                                <ResultsTable results={props.results}/>
+                                <ResultsTable results={results}/>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                 </Accordion>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Play Again</Button>
+                <Button onClick={onHide}>Play Again</Button>
             </Modal.Footer>
         </Modal>
     );

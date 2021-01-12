@@ -1,4 +1,4 @@
-import { resorts, nullResort } from './resorts'
+import resorts, { nullResort } from './resorts';
 
 // Fisher-Yates Shuffle method [https://en.wikipedia.org/wiki/Fisher–Yates_shuffle]
 const shuffle = (array) => {

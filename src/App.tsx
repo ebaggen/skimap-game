@@ -1,12 +1,15 @@
 import React from 'react';
 
 import './App.css';
-import { generateMapIndicies, resorts, sleep, nullResort } from './util';
+import { generateMapIndicies, resorts, nullResort, sleep } from './util';
 import { useState, useEffect } from 'react';
-import { ResultsView, GuessControls } from './components';
+import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core';
+import Resort from './types/resort';
+import Result from './types/result';
+import ResultsView from './components/resultsView/resultsView';
+import GuessControls from './components/guessControls/guessControls';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '10px'
   },
   image: {
-    height: '80vh',
+    height: '70vh',
     //borderStyle: 'solid',
     display: 'flex',
     justifyContent: 'center',
@@ -50,52 +53,51 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function App(){
+const App = () => {
 
   const [mapIndicies, setMapIndicies] = useState(generateMapIndicies);
-  const [totalCorrectGuesses, setTotalCorrectGuesses] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
-  const [currentResort, setCurrentResort] = useState(nullResort);
-  const [showGameOverPopup, setShowGameOverPopup] = useState(false);
-  const [isGuessCorrect, setIsGuessCorrect] = useState(undefined);
-  const [results, setResults] = useState([]);
-  const [selection, setSelection] = useState(null);
+  const [currentResort, setCurrentResort] = useState<Resort>(nullResort);
+  const [showGameOverPopup, setShowGameOverPopup] = useState<boolean>(false);
+  const [isGuessCorrect, setIsGuessCorrect] = useState<boolean | undefined>(undefined);
+  const [results, setResults] = useState<Result[]>([]);
+  const [selection, setSelection] = useState<string>('');
 
   const restartGame = () => {
     setMapIndicies(generateMapIndicies());
-    setTotalCorrectGuesses(0);
     setGameIndex(0);
     setCurrentResort(nullResort);
     setShowGameOverPopup(false);
     setIsGuessCorrect(undefined);
     setResults([]);
+    setSelection('');
   };
 
   
 
-  const guess = async function(guess) {
+  const guess = async function(guess: string) {
     
     let isCorrect = false;
-    if (guess && guess.length)
+    if (guess.length)
     {
       if (guess.toLowerCase() ===  currentResort.name.toLowerCase()) {
-        setTotalCorrectGuesses(totalCorrectGuesses + 1);
-        setIsGuessCorrect(true);
         isCorrect = true;
       }
     } else {
       guess = '';
     }
-
+    
+    // If not correct, set the selection to the correct answer for the user
     if (!isCorrect) {
-      setSelection([currentResort.name]);
+      setSelection(currentResort.name);
     }
 
     setIsGuessCorrect(isCorrect);
-    setResults([...results, {isCorrect: isCorrect, actual: currentResort.name, guessed: guess}])
     
     await sleep(1000);
-    setSelection([]);
+
+    setResults([...results, {isCorrect: isCorrect, actual: currentResort, guess: guess}])
+    setSelection('');
     setIsGuessCorrect(undefined);
     setGameIndex(gameIndex + 1);
   };
@@ -117,9 +119,7 @@ export default function App(){
     <Grid container justify="space-between" alignItems="center" className={classes.root}>
       <ResultsView
         show={showGameOverPopup}
-        onHide={() => restartGame()}
-        totalCorrect={totalCorrectGuesses}
-        total={resorts.length}
+        onHide={restartGame}
         results={results}
       />
       <Typography className={classes.title}>
@@ -128,17 +128,15 @@ export default function App(){
       <body className={classes.body}>
         {currentResort &&
           <>
-            <div elevation={10} variant="outlines" className={classes.image}>
+            <div className={classes.image}>
               <img
                 className={classes.img}
                 src={currentResort.img}
                 alt={`Cannot find ${currentResort.name}.`}
-                flex
               />
             </div>
             <div className={classes.controls}> 
               <GuessControls
-                
                 resort={currentResort}
                 selection={selection}
                 isGuessCorrect={isGuessCorrect}
@@ -158,3 +156,5 @@ export default function App(){
     </Grid>
   );
 }
+
+export default App;

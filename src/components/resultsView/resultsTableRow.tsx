@@ -2,18 +2,23 @@ import React from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import { green, red } from '@material-ui/core/colors';
+import Result from '../../types/result';
 
-const ResultsTableRow = (props) => {
+type Props = {
+    result: Result
+}
+
+const ResultsTableRow = ({ result }: Props) => {
     const correctIcon = <CheckIcon style={{ color: green[400]}}/>;
     const incorrectIcon = <ClearIcon style={{ color: red[400] }}/>;
 
     return (
         <tr>
             <td>
-                {props.result.isCorrect ? correctIcon : incorrectIcon}
+                {result.isCorrect ? correctIcon : incorrectIcon}
             </td>
-            <td>{props.result.actual}</td>
-            <td>{props.result.guessed}</td>
+            <td>{result.actual.name}</td>
+            <td>{result.guess}</td>
         </tr>
     );
 }

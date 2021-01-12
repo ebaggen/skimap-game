@@ -3,8 +3,13 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Popover from '@material-ui/core/Popover';
 import { Button  } from 'react-bootstrap';
 import { Box, Typography } from '@material-ui/core';
+import Resort from '../../types/resort';
 
-export default function HintPopover(props) {
+type Props = {
+    resort: Resort;
+}
+
+const HintPopover = ({ resort }: Props) => {
     return (
         <PopupState variant="popover" popupId="hint-popover">
             {(popupState) => (
@@ -25,7 +30,7 @@ export default function HintPopover(props) {
                     >
                         <Box p={2}>
                             <Typography>
-                                It's in {props.resort.location === '' ? props.resort.country : props.resort.location}.
+                                It's in {resort.location === '' ? resort.country : resort.location}.
                             </Typography>
                         </Box>
                     </Popover>
@@ -34,3 +39,5 @@ export default function HintPopover(props) {
         </PopupState>
     );
 }
+
+export default HintPopover;
