@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import ResultsTableRow from './resultsTableRow';
-import Result from '../../types/result';
+import { context } from '../../context';
 
-type Props = {
-    results: Result[]
-}
-
-const resultsTable = ({ results }: Props) => {
+const resultsTable = () => {
+    const { state } = useContext(context);
 
     return (
         <Table>
@@ -17,7 +14,7 @@ const resultsTable = ({ results }: Props) => {
                 <th>Your Guess</th>
             </thead>
             <tbody>
-                {results.map(result => {
+                {state.history.map(result => {
                     return (
                         <ResultsTableRow result={result} />
                     );

@@ -2,10 +2,10 @@ import React from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import { green, red } from '@material-ui/core/colors';
-import Result from '../../types/result';
+import IResult from '../../types/result';
 
 type Props = {
-    result: Result
+    result: IResult
 }
 
 const ResultsTableRow = ({ result }: Props) => {
@@ -18,7 +18,7 @@ const ResultsTableRow = ({ result }: Props) => {
                 {result.isCorrect ? correctIcon : incorrectIcon}
             </td>
             <td>{result.actual.name}</td>
-            <td>{result.guess}</td>
+            <td>{result.guess ? result.guess.name : ''}</td>
         </tr>
     );
 }

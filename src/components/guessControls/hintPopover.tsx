@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import Popover from '@material-ui/core/Popover';
-import { Button  } from 'react-bootstrap';
-import { Box, Typography } from '@material-ui/core';
-import Resort from '../../types/resort';
+import {
+    Popover,
+    Button,
+    Box,
+    Typography
+ } from '@material-ui/core';
+import { context } from '../../context';
+import { currentResortSelector } from '../../selectors';
 
-type Props = {
-    resort: Resort;
-}
+const HintPopover = () => {
+    const { state } = useContext(context);
 
-const HintPopover = ({ resort }: Props) => {
+    const currentResort = currentResortSelector(state);
+
     return (
         <PopupState variant="popover" popupId="hint-popover">
             {(popupState) => (
                 <div>
-                    <Button variant="outline-info" color="primary" {...bindTrigger(popupState)}>
+                    <Button variant="contained" {...bindTrigger(popupState)}>
                         Hint
                     </Button>
                     <Popover
@@ -30,7 +34,7 @@ const HintPopover = ({ resort }: Props) => {
                     >
                         <Box p={2}>
                             <Typography>
-                                It's in {resort.location === '' ? resort.country : resort.location}.
+                                It's in {currentResort.location === '' ? currentResort.country : currentResort.location}.
                             </Typography>
                         </Box>
                     </Popover>

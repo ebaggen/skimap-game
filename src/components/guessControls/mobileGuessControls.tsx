@@ -1,48 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TextEntry from './textEntry';
 import HintPopover from './hintPopover';
 import { Button, Container, Row} from 'react-bootstrap';
-import Resort from '../../types/resort';
+import { context } from '../../context';
+import { SubmitGuess } from '../../actions';
 
-type Props = {
-    resort: Resort,
-    selection: string,
-    isGuessCorrect: boolean | undefined,
-    onSubmit: () => void,
-    onSelectionChange: (selection: string) => void
-}
+const MobileGuessControls = () => {
+    const { state, dispatch } = useContext(context);
 
-const MobileGuessControls = ({
-    resort,
-    selection,
-    isGuessCorrect,
-    onSubmit,
-    onSelectionChange
-}: Props) => {
     return (
         <Container fluid>
             <Row>
-                <TextEntry
-                    selection={selection}
-                    onSelectionChange={onSelectionChange}
-                    onSubmit={onSubmit}
-                    isGuessCorrect={isGuessCorrect}
-                />
+                <TextEntry />
             </Row>
             <Row>
                 <Button
                     variant="outline-secondary"
-                    onClick={onSubmit}
-                    disabled={selection.length === 0}
+                    onClick={() => dispatch(SubmitGuess())}
+                    disabled={state.guess.selection === null || state.guess.showResult}
                 >
                     Submit
                 </Button>
             </Row>
             <Row>
-                <HintPopover resort={resort}/>
+                <HintPopover />
             </Row>
             <Row>
-                <Button variant="outline-danger" onClick={onSubmit}>
+                <Button
+                    variant="outline-danger"
+                    onClick={() => dispatch(SubmitGuess())}
+                >
                     Give up
                 </Button>
             </Row>

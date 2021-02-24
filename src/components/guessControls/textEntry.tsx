@@ -1,47 +1,66 @@
-import React, { useState } from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import React, { useContext, useState } from 'react';
+import { Autocomplete } from '@material-ui/lab';
 import { resorts } from '../../util';
-import Resort from '../../types/resort';
+import { context } from '../../context';
+import { UpdateGuess, SubmitGuess } from '../../actions';
+import { TextField } from '@material-ui/core';
+import IResort from '../../types/resort';
+import { currentResortSelector } from '../../selectors';
 
-type Props = {
-    isGuessCorrect: boolean | undefined,
-    selection: string,
-    onSubmit: () => void,
-    onSelectionChange: (selection: string) => void
-}
-
-const TextEntry = ({
-    isGuessCorrect,
-    selection,
-    onSubmit,
-    onSelectionChange
-}: Props) => {
-    const [sl, setSl] = useState<string>('');
+const TextEntry = () => {
+    const {
+        state,
+        dispatch
+    } = useContext(context);
 
     const keyHandler = (e: any) => {
         if (e.nativeEvent.code == 'Enter') {
-            onSubmit();
+            dispatch(SubmitGuess());
         }
     }
 
-    const selectionHandler = (selection: string[]) => {
-        alert(selection[0]);
-        if (selection) {
-            setSl(selection[0]);
-        }
-        //onSelectionChange(selection[0]);
+    const selectionHandler = (selection: IResort | null) => {
+        dispatch(UpdateGuess(
+            selection,
+            state.guess.input
+        ));
+    }
+
+    const inputHandler = (input: string) => {
+        dispatch(UpdateGuess(
+            state.guess.selection,
+            input
+        ));
     }
 
     return (
-        <Typeahead
-            onChange={selectionHandler}
-            options={resorts.map((resort: Resort) => resort.name)}
-            selected={[sl]}
-            placeholder='Start typing a resort...'
-            flip
-            onKeyDown={keyHandler}
-            isValid={isGuessCorrect === true}
-            isInvalid={isGuessCorrect === false}
+        <Autocomplete
+            id="text-entry"
+            options={resorts}
+            value={state.guess.selection}
+            onKeyPress={keyHandler}
+            onChange={(_event: any, newValue: IResort | null) => {
+                selectionHandler(newValue);
+            }}
+            inputValue={state.guess.input}
+            onInputChange={(_event: any, newValue: string) => {
+                inputHandler(newValue);
+            }}
+            getOptionLabel={(option) => option.name}
+            openOnFocus
+            autoHighlight
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label="Choose a resort"
+                    variant="outlined"
+                    inputProps={{
+                        ...params.inputProps
+                    }}
+                    error={state.guess.showResult && !state.guess.isCorrect}
+                    helperText={state.guess.showResult && currentResortSelector(state).name}
+                />
+            )}
         />
     );
 }

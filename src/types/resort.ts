@@ -1,4 +1,5 @@
-type Resort = {
+interface IResort {
+    id: number,
     name: string,
     img: string,
     location: string
@@ -7,4 +8,4 @@ type Resort = {
     yearPainted: number
 }
 
-export default Resort;
+export default IResort;

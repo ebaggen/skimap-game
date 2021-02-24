@@ -1,21 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Modal, Accordion, Card } from 'react-bootstrap';
-import Result from '../../types/result';
 import ResultsTable from './resultsTable';
+import { context } from '../../context';
+import { RestartGame } from '../../actions';
 
-type Props = {
-    results: Result[],
-    show: boolean,
-    onHide: () => void
-}
+const GameOverPopup = () => {
+    const { state, dispatch } = useContext(context);
 
-const GameOverPopup = ({ results, show, onHide }: Props) => {
-
-    const totalCorrect = results.filter(result => result.isCorrect).length;
+    const totalCorrect = state.history.filter(result => result.isCorrect).length;
 
     return (
         <Modal
-            show={show}
+            show={state.showResultsPopup}
             size="lg"
             centered
             backdrop="static"
@@ -25,7 +21,7 @@ const GameOverPopup = ({ results, show, onHide }: Props) => {
                 Game over!
             </Modal.Header>
             <Modal.Body>
-                You got {totalCorrect} of {results.length} correct.
+                You got {totalCorrect} of {state.history.length} correct.
 
                 <Accordion>
                     <Card>
@@ -36,14 +32,14 @@ const GameOverPopup = ({ results, show, onHide }: Props) => {
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
-                                <ResultsTable results={results}/>
+                                <ResultsTable/>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                 </Accordion>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={onHide}>Play Again</Button>
+                <Button onClick={() => dispatch(RestartGame())}>Play Again</Button>
             </Modal.Footer>
         </Modal>
     );

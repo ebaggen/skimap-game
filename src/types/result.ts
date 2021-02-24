@@ -1,9 +1,9 @@
-import Resort from './resort';
+import IResort from './resort';
 
-type Result = {
+interface IResult {
     isCorrect: boolean,
-    guess: string,
-    actual: Resort
+    guess: IResort | null,
+    actual: IResort
 }
 
-export default Result;
+export default IResult;
