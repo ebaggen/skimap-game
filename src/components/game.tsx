@@ -1,94 +1,88 @@
-import React, { useContext } from 'react';
-
-import '../App.css';
-import { resorts } from '../util';
-import { makeStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ResultsView from '../components/resultsView/resultsView';
-import GuessControls from '../components/guessControls/guessControls';
-import { context } from '../context';
-import { currentResortSelector } from '../selectors';
-
+import React, { useContext } from "react";
+import "../App.css";
+import { Box, Button, makeStyles } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import ResultsView from "./resultsView/resultsView";
+import GuessControls from "./guessControls/guessControls";
+import ResultToast from "./popups/resultToast";
+import { context } from "../context";
+import currentResortSelector from "../selectors/currentResortSelector";
+import ResortParameter from "../enums/resortParameter";
+import { ShowParameterPopup } from "../actions/gameActions";
+//import ResortParameterPopup from "./popups/resortParametersPopup";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100vw',
-      height: '100vh',
-      flexDirection: 'column',
-    },
-    title: {
-      height: '5vh',
-      variant: 'h1'
-    },
-    body: {
-      height: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-around',
-      alignItems: 'center'
-    },
-    footer: {
-      height: '5hv',
-      margin: '10px'
-    },
-    image: {
-      height: '70vh',
-      //borderStyle: 'solid',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    img: {
-      margin: 'auto',
-      objectFit: 'contain',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
-    controls: {
-      display: 'flex',
-      justifyContent: 'center',
-      alightItems: 'center',
-      //borderStyle: 'solid',
-    }
-  }));
+  header: {
+    margin: "20px",
+    fontSize: "1.5rem",
+  },
+  imageContainer: {
+    height: "60%",
+    padding: "0px 10px",
+    display: "flex",
+  },
+  image: {
+    margin: "auto",
+    objectFit: "contain",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  controls: {
+    margin: "20px",
+  },
+  footer: {
+    margin: "20px",
+  },
+}));
 
 const Game = () => {
-    const { state } = useContext(context);
+  const { state, dispatch } = useContext(context);
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const currentResort = currentResortSelector(state);
-    
-    return (
-        <Grid container justify="space-between" alignItems="center" className={classes.root}>
-            <ResultsView />
-            <Typography className={classes.title}>
-                Name that Niehues
-            </Typography>
-            {currentResort &&
-              <body className={classes.body}>
-                <div className={classes.image}>
-                    <img
-                        className={classes.img}
-                        src={currentResort.img}
-                        alt={`Cannot find ${currentResort.name}.`}
-                    />
-                </div>
-                <div className={classes.controls}> 
-                    <GuessControls />
-                </div>    
-                <label>
-                    {state.history.length + 1} / {resorts.length}
-                </label>
-              </body>
-            }
-            
-            <footer className={classes.footer}>
-                All artwork beautifully painted by <a href="https://jamesniehues.com" target="_blank" rel="noopener noreferrer">James Niehues</a>.
-            </footer>
-      </Grid>
-    );
-}
+  const currentResort = currentResortSelector(state);
+
+  return (
+    <Box
+      height="100vh"
+      width="100vw"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <ResultsView />
+      <ResultToast />
+
+      <Typography className={classes.header} variant="h1">
+        Name that Niehues
+      </Typography>
+      {currentResort && (
+        <>
+          <Box flexGrow={1} className={classes.imageContainer}>
+            <img
+              className={classes.image}
+              src={currentResort.img}
+              alt={`Cannot find ${currentResort.name}.`}
+            />
+          </Box>
+          <Box className={classes.controls}>
+            <GuessControls />
+          </Box>
+        </>
+      )}
+      <Typography variant="caption">
+        All artwork beautifully painted by{" "}
+        <a
+          href="https://jamesniehues.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          James Niehues
+        </a>
+        .
+      </Typography>
+    </Box>
+  );
+};
 
 export default Game;

@@ -1,48 +1,46 @@
-import React, { useContext } from 'react';
-import { Button, Modal, Accordion, Card } from 'react-bootstrap';
-import ResultsTable from './resultsTable';
-import { context } from '../../context';
-import { RestartGame } from '../../actions';
+import React, { useContext } from "react";
+import ResultsTable from "./resultsTable";
+import { context } from "../../context";
+import { RestartGame } from "../../actions/gameActions";
 
-const GameOverPopup = () => {
-    const { state, dispatch } = useContext(context);
+import Dialog, { DialogProps } from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 
-    const totalCorrect = state.history.filter(result => result.isCorrect).length;
+const ResultsViewPopup = () => {
+  const { state, dispatch } = useContext(context);
 
-    return (
-        <Modal
-            show={state.showResultsPopup}
-            size="lg"
-            centered
-            backdrop="static"
-            keyboard={false}
-        >
-            <Modal.Header>
-                Game over!
-            </Modal.Header>
-            <Modal.Body>
-                You got {totalCorrect} of {state.history.length} correct.
+  const totalCorrect = state.history.filter((result) => result.isCorrect)
+    .length;
 
-                <Accordion>
-                    <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                Show results
-                            </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="0">
-                            <Card.Body>
-                                <ResultsTable/>
-                            </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                </Accordion>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={() => dispatch(RestartGame())}>Play Again</Button>
-            </Modal.Footer>
-        </Modal>
-    );
-}
+  const handleRestart = () => dispatch(RestartGame());
 
-export default GameOverPopup;
+  return (
+    <Dialog
+      open={state.showResultsPopup}
+      fullWidth
+      scroll="paper"
+      aria-labelledby="scroll-dialog-title"
+      aria-describedby="scroll-dialog-description"
+    >
+      <DialogTitle id="scroll-dialog-title">
+        You got {totalCorrect} of {state.history.length}
+      </DialogTitle>
+      <DialogContent dividers>
+        <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+          <ResultsTable />
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleRestart} color="primary">
+          Play Again
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default ResultsViewPopup;

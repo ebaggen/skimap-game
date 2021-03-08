@@ -1,31 +1,35 @@
-import React, { createContext, useEffect, useReducer } from 'react';
-import { useDelayedEffect } from './hooks';
-import IGameState, { initialGameState } from './types/gameState';
-import { GameActions, MoveNext } from './actions';
-import gameReducer from './reducers';
+import React, { Dispatch, createContext, useReducer } from "react";
+import useDelayedEffect from "./hooks/useDelayedEffect";
+import { GameActions, MoveNext } from "./actions/gameActions";
+import gameReducer from "./reducers/gameReducer";
+import combineReducers from "./utility/combineReducers";
+import IGameState, { initialGameState } from "./types/gameState";
 
 interface IAppContext {
-    state: IGameState;
-    dispatch: React.Dispatch<GameActions>;
+  state: IGameState;
+  dispatch: React.Dispatch<GameActions>;
 }
 
 const context = createContext<IAppContext>({
-    state: initialGameState,
-    dispatch: () => null
+  state: initialGameState,
+  dispatch: () => null,
 });
 
 const { Provider } = context;
 
-const AppProvider = ({ children }: { children: JSX.Element}) => {
-    const [state, dispatch] = useReducer(gameReducer, initialGameState);
+const AppProvider = ({ children }: { children: JSX.Element }) => {
+  const [state, dispatch]: [IGameState, Dispatch<GameActions>] = useReducer(
+    combineReducers(gameReducer),
+    initialGameState
+  );
 
-    useDelayedEffect<GameActions>(state, dispatch, MoveNext, 2000, [state.guess.showResult]);
+  const onShowResultChanged = () => state.guess.showResult;
 
-    return (
-        <Provider value={{ state, dispatch }}>
-            {children}
-        </Provider>
-    );
-}
+  useDelayedEffect<GameActions>(dispatch, MoveNext, 1000, onShowResultChanged, [
+    state.guess.showResult,
+  ]);
+
+  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+};
 
 export { context, AppProvider };

@@ -2,7 +2,7 @@ interface IResort {
     id: number,
     name: string,
     img: string,
-    location: string
+    state: string
     region: string,
     country: string,
     yearPainted: number
