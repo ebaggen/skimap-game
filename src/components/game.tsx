@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "../App.css";
-import { Box, Button, makeStyles } from "@material-ui/core";
+import { Box, Card, CardMedia, makeStyles } from "@material-ui/core";
+import { shadows } from "@material-ui/system";
 import Typography from "@material-ui/core/Typography";
 import ResultsView from "./resultsView/resultsView";
 import GuessControls from "./guessControls/guessControls";
@@ -16,16 +17,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px",
     fontSize: "1.5rem",
   },
-  imageContainer: {
-    height: "60%",
-    padding: "0px 10px",
-    display: "flex",
-  },
   image: {
     margin: "auto",
     objectFit: "contain",
-    maxWidth: "100%",
-    maxHeight: "100%",
+    maxWidth: "90%",
+    height: "65vh",
   },
   controls: {
     margin: "20px",
@@ -58,11 +54,12 @@ const Game = () => {
       </Typography>
       {currentResort && (
         <>
-          <Box flexGrow={1} className={classes.imageContainer}>
-            <img
+          <Box flexGrow={1}>
+            <CardMedia
               className={classes.image}
-              src={currentResort.img}
-              alt={`Cannot find ${currentResort.name}.`}
+              component="img"
+              image={currentResort.img}
+              alt={`Could not locate image for ${currentResort.name}`}
             />
           </Box>
           <Box className={classes.controls}>

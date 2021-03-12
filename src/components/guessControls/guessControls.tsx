@@ -12,12 +12,13 @@ const GuessControls = () => {
 
   return (
     <Box width="70vw" padding="10px">
-      <Grid container spacing={1} justify="center" alignItems="center">
+      <Grid container spacing={3} justify="center" alignItems="center">
         <Grid item xs={12}>
           {isMobileDevice() ? <MobileTextEntry /> : <TextEntry />}
         </Grid>
-        <Grid item md={2}>
+        <Grid item xs={2}>
           <Button
+            fullWidth
             variant="contained"
             onClick={() => dispatch(SubmitGuess())}
             disabled={state.guess.selection === null || state.guess.showResult}
@@ -25,8 +26,9 @@ const GuessControls = () => {
             Submit
           </Button>
         </Grid>
-        <Grid item md={2}>
+        <Grid item xs={2}>
           <Button
+            fullWidth
             variant="contained"
             onClick={() => dispatch(SubmitGuess())}
             disabled={state.guess.showResult}

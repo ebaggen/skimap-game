@@ -300,8 +300,8 @@ const resorts: Resort[] = [
   },
   {
     id: 33,
-    name: "Crotched Mountain",
-    img: "./images/crotched-mountain.png",
+    name: "Crotched",
+    img: "./images/crotched.png",
     state: "New Hampshire",
     region: "New England",
     country: "US",
@@ -309,8 +309,8 @@ const resorts: Resort[] = [
   },
   {
     id: 34,
-    name: "Crystal Mountain",
-    img: "./images/crystal-mountain.png",
+    name: "Crystal",
+    img: "./images/crystal.png",
     state: "Washington",
     region: "Northwest",
     country: "US",
@@ -616,7 +616,7 @@ const resorts: Resort[] = [
   {
     id: 68,
     name: "Mt Sunapee",
-    img: "./images/mt-sunapee.jpg",
+    img: "./images/mt-sunapee.png",
     state: "New Hampshire",
     region: "New England",
     country: "US",
@@ -750,8 +750,8 @@ const resorts: Resort[] = [
   },
   {
     id: 83,
-    name: " Pajarito",
-    img: "./images/-pajarito.jpg",
+    name: "Pajarito",
+    img: "./images/pajarito.jpg",
     state: "New Mexico",
     region: "Southwest",
     country: "US",
