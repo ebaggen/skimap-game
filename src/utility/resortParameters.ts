@@ -1,7 +1,4 @@
-// go through resorts and find all unique countries, regions, and locations and returns as lists
-import { debug } from "console";
 import resorts from "../constants/resorts";
-import ResortParameter from "../enums/resortParameter";
 import IResort from "../types/resort";
 import IResortParameterCollection from "../types/resortParameterCollection";
 

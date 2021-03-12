@@ -27,7 +27,7 @@ const ResultsViewPopup = () => {
       aria-describedby="scroll-dialog-description"
     >
       <DialogTitle id="scroll-dialog-title">
-        You got {totalCorrect} of {state.history.length}
+        You got {totalCorrect} of {state.history.length} in 
       </DialogTitle>
       <DialogContent dividers>
         <DialogContentText id="scroll-dialog-description" tabIndex={-1}>

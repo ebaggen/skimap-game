@@ -18,6 +18,7 @@ export default interface IGameState {
   theme: Theme;
   configuredParameters: IResortParameterCollection;
   showParameterPopup: boolean;
+  startTime: Date;
 }
 
 export const initialGameState: IGameState = {
@@ -29,4 +30,5 @@ export const initialGameState: IGameState = {
   theme: lightTheme,
   configuredParameters: getAllResortParameters(),
   showParameterPopup: false,
+  startTime: new Date()
 };
